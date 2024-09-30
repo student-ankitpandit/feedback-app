@@ -1,28 +1,31 @@
-import { connect } from "http2";
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 type ConnectionObject = {
-    isConnected?: number
+  isConnected?: number
 }
 
-const connection: ConnectionObject = {} //cause we gave optional operator ? 
+const connection: ConnectionObject = {}
 
-async function connectToDB(): Promise<void> {
-    if(connection.isConnected) { //cheking if database is already connected
-        console.log("Already connected to DB");
-        return 
+async function dbConnect(): Promise<void> {
+    // Check if we have a connection to the database or if it's currently connecting
+    if (connection.isConnected) {
+        console.log("Already connected to the database");
+        return
     }
 
     try {
-        const db = await mongoose.connect(process.env.MONGO_URI || '')
-        connection.isConnected = db.connections[0].readyState  //take connection form db and extract first value and that is ready state and ready state is an number in own
-        console.log("DB connected Successfully");
-        
+        // Attempt to connect to the database
+        const db = await mongoose.connect(process.env.MONGODB_URI || '', {});
+
+        connection.isConnected = db.connections[0].readyState;
+
+        console.log('Database connected successfully');
     } catch (error) {
-        console.log("DB connection failed", error);
-        
-        process.exit(1) //gracefully exit
+        console.error('Database connection failed:', error);
+
+        // Graceful exit in case of a connection error
+        process.exit(1);
     }
 }
 
-export default connectToDB;
+export default dbConnect;

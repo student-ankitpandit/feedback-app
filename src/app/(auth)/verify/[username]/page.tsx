@@ -1,18 +1,22 @@
-'use client'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+'use client';
+
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useToast } from '@/hooks/use-toast';
-import { signUpSchema } from '@/schemas/signUpSchema';
-import { verifySchema } from '@/schemas/verifySchema';
+import { useToast } from '@/components/ui/use-toast';
 import { ApiResponse } from '@/types/ApiResponse';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button } from '@react-email/components';
 import axios, { AxiosError } from 'axios';
-import { useParams } from 'next/navigation';
-import { useRouter } from 'next/router'
-import React from 'react'
+import { useParams, useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod'
+import * as z from 'zod';
+import { verifySchema } from '@/schemas/verifySchema';
 
 export default function VerifyAccount() {
   const router = useRouter();

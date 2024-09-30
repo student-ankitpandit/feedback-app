@@ -27,6 +27,7 @@ type MessageCardProps = {
 };
 
 export function MessageCard({ message, onMessageDelete }: MessageCardProps) {
+  console.log(message); // Check if message._id is present
   const { toast } = useToast();
 
   const handleDeleteConfirm = async () => {
